@@ -1,0 +1,23 @@
+h1 Detail Information
+- if @certificate.present?
+  .description
+    h3.sub-text = @certificate.name
+    h2.bold = @certificate&.institution&.name
+    h3.subtext.italic.certificate-location = @certificate.location
+    h3.bold = @certificate.duration > 1 ? "#{@certificate.duration} months" : "#{@certificate.duration} month"
+    p = @certificate.description
+    p = @certificate&.institution&.description
+- else
+  - @path_description.map do |index, path|
+    .description[class="p-#{index}"]
+      .content
+        h3.sub-text = path.certificate.qualification_type
+        h2.bold = path.certificate&.institution&.name
+        h3.subtext.italic.certificate-location = path.certificate.location
+        h3.bold = "#{certificate_date(path.certificate.duration)} | $#{path.certificate.cost}"
+        p = path.certificate.description
+        p = "#{path.certificate&.institution&.description}"
+      .sidebar
+        a Admission Requirements
+        a Internship Options
+        a[data-toggle="modal" data-target="#selected-list" onclick="setTimeout(function(){initPathMap(#{path.id},true)},50);"] Map

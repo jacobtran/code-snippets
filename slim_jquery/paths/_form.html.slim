@@ -1,0 +1,53 @@
+.result
+  .top-section: .container
+    = render "paths/top_section/path_header_section"
+    - if @path_positions.present?
+      .generic-path.panel.panel-default
+      .share_path.hidden
+    - else
+      = render "paths/top_section/certificate"
+  .bottom-section: .container
+    .detail-path
+      = render "paths/bottom_section/detail_path"
+    .descriptions
+      = render "paths/bottom_section/description"
+    .detail-path-social
+      = render "paths/bottom_section/detail_path_social"
+= javascript_include_tag "https://d3js.org/d3.v3.min.js"
+script [async defer src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLEMAP_KEY']}" type="text/javascript"]
+= javascript_include_tag "https://cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js", "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.5.2/dom-to-image.min.js"
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.31/pdfmake.min.js"
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.31/vfs_fonts.js"
+- if @path_positions.present?
+  javascript:
+      setTimeout(function(){generic_path("#{@future_career}", "#{@location}")}, 0)
+      //generate svg after 1 second
+      setTimeout( function(){generate_png()}, 1000 )
+- else
+  javascript:
+      get_certificates("#{@certificate_name}")
+
+css:
+  .social-share-button {
+    / display: none;
+    opacity: 0.5;
+   }
+   #pdf {
+    opacity: 0.5;
+   }
+
+javascript:
+  $('.social-share-button a').on('click',function(event){
+      var socialMedia = $(this).attr('data-site');
+    $.post("/path/share",{name: socialMedia},
+      function(){
+        console.log("One more path is shared")
+      });
+
+  })
+
+  setTimeout(function(){
+    $('.alert.alert-warning').fadeOut();
+  }, 3000)

@@ -1,0 +1,9 @@
+- if favourited_paths.length > 0
+  - favourited_paths.map do |path|
+      .panel.panel-default 
+        span = link_to path.name, path_path(path.id, path_position: path.path_position)
+        span.right-content
+          = link_to path_path(path, action_index: true), method: :delete, remote: true
+            span.glyphicon.glyphicon-remove
+- else
+  p You have no favourited paths.

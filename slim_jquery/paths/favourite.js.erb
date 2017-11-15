@@ -1,0 +1,11 @@
+$("#favourite").modal("hide");
+$('.alert.alert-warning').html("<%= j @msg %>");
+$('.alert.alert-warning').show();
+setTimeout(function(){
+  $('.alert.alert-warning').fadeOut();
+}, 3000)
+<% if params[:action_index] %>
+  $(".paths").html("<%= j render 'favourite', favourited_paths: @favourited_paths %>")
+<% else %>
+  $(".favourite").html("<%= j render 'paths/bottom_section/favouriteModal', path_position: @path_position %>")
+<% end %>

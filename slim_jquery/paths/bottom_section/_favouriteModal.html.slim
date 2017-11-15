@@ -1,0 +1,15 @@
+- unless user_favourited(path_position)
+  p.bold Save This Path
+  span.glyphicon.glyphicon-star-empty[data-toggle="modal" data-target="#favourite"]
+- else
+  p.bold Path Saved
+  = link_to path_path(user_favourited(path_position)), method: :delete, remote: true do
+    span.glyphicon.glyphicon-star
+#favourite.modal.fadeIn: .modal-dialog: .modal-content: .modal-body
+  = form_tag paths_path, method: :post, remote: true do
+    h1.bold Favourite Your Path
+    .form-group
+      = label_tag "Name Your Path"
+      = text_field_tag "name", nil, placeholder:"name your path here."
+    = submit_tag "Save", class:"btn"
+    = hidden_field_tag "path_position", path_position

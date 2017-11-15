@@ -1,0 +1,24 @@
+- if @path_positions.present?
+  section
+    .begin.col-sm-2
+      p.bold Start
+      img.icon[src=(current_user.image if current_user.present?)]
+      i.fa.fa-long-arrow-right.fa-2x.col-sm-1
+      / i.fa.fa-long-arrow-down.fa-2x.col-sm-1
+    #paths.panel.panel-default.col-sm-4.col-xs-10: .panel-body
+      - for i in 1..(@specific_path.first.position)
+        - if i > 1
+          .breakline
+        .path-clone.col-sm-12 [class="p-#{i}-#{@specific_path.first.path_name}" data-toggle="modal" data-target="#selected-list" onclick="setTimeout(function(){initPathMap(this,false)}.bind(this),50);"]
+          - path = @specific_path[@specific_path.find_index{|item| item.position == i}]
+          small.bold = path.certificate.qualification_type
+          p = path.certificate&.institution&.name
+          img.icon[src="/images/jobs/map4.png" width="50px"]
+    / i.fa.fa-long-arrow-right.fa-2x.col-sm-1
+    / i.fa.fa-long-arrow-down.fa-2x.col-sm-1
+    .goal.col-sm-2
+      i.fa.fa-long-arrow-right.fa-2x.col-sm-1
+      - if @job.image
+        img.icon[src="#{@job.image}"]
+      p.bold = @future_career.split.map(&:capitalize)*' '
+  = render "paths/bottom_section/selectedPathModal"

@@ -1,0 +1,42 @@
+
+script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"
+
+header
+  .left-section
+    - if @path_positions.present?
+      .breadcrumb
+        h1.bold Career Path Result
+        span >
+        span.sub-text = @future_career.split.map(&:capitalize)*' '
+    - else
+      .breadcrumb
+        h1.bold Certificate Result
+        span >
+        span.sub-text = @certificate_name
+  .right-section
+    - if @path_positions.present?
+      / #export-pdf.bold Export as PDF
+      / #export-pdf.bold = link_to "Export as PDF", "#"
+      / #export-pdf.bold = link_to "Export as PDF", new_path_path(format: :pdf), id: "pdf", target: "_blank"
+      .btn.btn-primary id="pdf"
+        Content Export PDF
+      #social-share
+        | Share :
+        = social_share_button_tag(@path_positions.first.job.title.titleize,
+          :image => "data:image", :desc => "PathPlan - I've Found My Path!")
+
+/ canvas
+javascript:
+  $('#export-pdf').click(function(){
+    html2canvas(document.body, {
+      onrendered: function(canvas) {
+        // document.body.appendChild(canvas);
+        var dt = canvas.toDataURL('image/jpeg');
+        console.log(dt);
+        //{{ $dt = "Hello!" }}
+        $('img#data').hide();
+        $('img#data').attr('src', dt);
+        // #{ $dt = "Hello" }
+      }
+    });
+  });

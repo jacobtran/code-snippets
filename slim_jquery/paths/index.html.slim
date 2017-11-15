@@ -1,0 +1,6 @@
+.favourited_path: .container
+  h1.bold Your Paths
+  .paths.bold = render "favourite", favourited_paths: @favourited_paths
+
+javascript: 
+  $('.alert.alert-warning').hide();

@@ -1,0 +1,19 @@
+<h1 style="color:#006cc5;">PathPlan</h1>
+<div id="generic-path"></div>
+<!-- <h2>Screenshot</h2>
+<img src="" id="screenshot"> -->
+<%= wicked_pdf_javascript_include_tag "https://d3js.org/d3.v3.min.js" %>
+<%= wicked_pdf_javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" %>
+<%= wicked_pdf_javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" %>
+<script>
+  // params[:test] is the img data
+  var encoded = '<%= params[:test] %>'.replace(/_/g,"+");
+  // decoding the image to base 64
+  var img = window.atob(encoded);
+  // img is pushed into div tag, which is then rendered into pdf
+  $("#generic-path").after(img);
+
+  //screenshot
+  // $("#screenshot").attr('src', localStorage.getItem("imgData"));
+
+</script>

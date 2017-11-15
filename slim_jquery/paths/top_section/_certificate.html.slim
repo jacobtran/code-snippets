@@ -1,0 +1,6 @@
+.certificates-box.panel.panel-default
+  .certificates-list: .certificate-scroll[style="width:#{@certificates.length * 270}px"]
+    - @certificates.map do |cert|
+      .panel.panel-default[onclick="get_description(#{cert.id}, true)"]
+        p = cert.name
+        p = cert.duration > 1 ? "#{cert.duration} months" : "#{cert.duration} month"

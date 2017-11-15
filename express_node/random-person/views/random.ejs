@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<h1>Persons</h1>
+
+<% if (pick) { %>
+  <h3>The gods have chosen <span style="color:red;font-size: 2em;"><%= pick %></span> to be sacrificed!</h3>
+<% } %>
+
+<form method="post" action>
+  <div>
+    <label for="names">Names: </label>
+    <br/>
+    <textarea id="names" name="names" cols="100" rows="2"><%= names %></textarea>
+  </div>
+  <div>
+    <input type="submit" name="submit">
+  </div>
+</form>
+
+<%- include('partials/footer') %>
